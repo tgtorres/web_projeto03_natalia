@@ -1,13 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
-body, html {
+* {
 	margin: 0;
 	padding: 0;
+}
+
+*:focus {
+	outline: none;
+}
+
+body, html {
 	font-family: 'Montserrat';
 	height: 100%;
 	width: 100%;
 	color: #5d6773;
 	font-weight: 500;
+	font-size: 14px;
 }
 
 #root {
@@ -34,6 +42,60 @@ a {
 	color: #fff;
 }
 
+
+.form {
+	display: flex;
+	flex-direction: column;
+}
+
+.form .form-group {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.form-group label {
+	margin-bottom: 5px;
+}
+
+.form-group input, .form-group textarea {
+	border: solid 1px #dedede;
+	border-radius: 10px;
+	padding: 12px 20px;
+	color: inherit;
+	font-size: inherit;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+	border-color: #a6a6a6;
+}
+
+.table {
+	overflow-x: auto;
+}
+
+.table table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table table td, .table table th {
+	padding: 15px 20px;
+}
+
+.table table td {
+	border-top: solid 1px #dedede;
+}
+
+.table table thead {
+	text-align: left;
+}
+
+.table table thead tr {
+	background-color: #dedede;
+}
+
 .app {
 	min-height: 100%;
 	width: 100%;
@@ -41,7 +103,7 @@ a {
 }
 
 .menu {
-	width: 13rem;
+	width: 15rem;
 	min-height: 100%;
 	max-height: 100%;
 	background-color: #dedede;
@@ -63,6 +125,10 @@ a {
 	transition: all 0.2s;
 }
 
+.menu nav a svg {
+	margin-right: 10px;
+}
+
 .menu nav a.active, .menu nav a:focus, .menu nav a:hover, .menu nav a:active {
 	background-color: #a6a6a6;
 	color: #fff;
@@ -71,5 +137,79 @@ a {
 .container {
 	flex: 1 1 0;
 	max-width: 100%;
-	padding: 60px 30px;
+	padding: 60px 80px;
+}
+
+.container header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.container .content {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: row;
+}
+
+.container .content.direction-column {
+	flex-direction: column;
+}
+
+/* Ocupa todo o espaço restante disponível */
+.container .content .column {
+	flex: 1 1 0;
+	max-width: 100%;
+}
+
+/* Ocupa 100% da área */
+.container .content .column-4 {
+	flex: 0 0 100%;
+	max-width: 100%;
+}
+
+/* Ocupa 75% da área */
+.container .content .column-3 {
+	flex: 0 0 75%;
+	max-width: 75%;
+}
+
+/* Ocupa 50% da área */
+.container .content .column-2 {
+	flex: 0 0 50%;
+	max-width: 50%;
+}
+
+/* Ocupa 25% da área */
+.container .content .column-1 {
+	flex: 0 0 25%;
+	max-width: 25%;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-start {
+	justify-content: flex-start;
+}
+
+.justify-end {
+	justify-content: flex-end;
+}
+
+.justify-between {
+	justify-content: space-between;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.text-align-left {
+	text-align: left;
+}
+
+.text-align-right {
+	text-align: right;
 }
