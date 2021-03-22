@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiUsers, FiScissors, FiCalendar } from 'react-icons/fi';
+import './styles.css';
 
 export default function Menu() {
 

@@ -1,48 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '../../components/Table';
 
-export default function Customers() {
+import api from '../../services/api';
 
-	return (
+export default class Customers extends Component {
 
-		<div className="container">
+	state = {
+  		customers: []
+	};
 
-			<header>
+	componentDidMount() {
 
-				<h2>Clientes</h2>
+		api.get('customers').then(response => {
+			this.setState({ customers: response.data.rows});
+		}).catch(error=> {})
 
-				<Link className="btn" to="/clientes/adicionar">
-					Adicionar Cliente
-				</Link>
+	}
 
-			</header>
+	render() {
 
-			<div className="content direction-column">
+		return (
 
-				<Table headers={ ['Nome', 'Descrição', 'Ações'] }>
+			<div className="container">
 
-					<tr>
-						
-						<td> Natália </td>
-						<td> Natdsajdaskldjlasália </td>
-						<td> Excluir e Editar </td>
+				<header>
 
-					</tr>
+					<h2>Clientes</h2>
 
-					<tr>
-						
-						<td> Lídia </td>
-						<td> Natália </td>
-						<td> Excluir e Editar </td>
+					<Link className="btn" to="/clientes/adicionar">
+						Adicionar Cliente
+					</Link>
 
-					</tr>
+				</header>
 
-				</Table>
+				<div className="content direction-column">
+
+					<Table headers={ ['Nome', 'Instagram', 'Telefone', 'Ações'] }>
+
+						{
+							this.state.customers.map(customer => (
+
+								<tr key={customer.id}>
+									<td> {customer.name} </td>
+									<td> {customer.instagram} </td>
+									<td> {customer.phone} </td>
+									<td> ações </td>
+								</tr>
+
+							))
+						}	
+
+					</Table>
+
+				</div>
 
 			</div>
 
-		</div>
+		);
+	}
 
-	);
 }

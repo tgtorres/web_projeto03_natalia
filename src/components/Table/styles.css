@@ -1,0 +1,24 @@
+.table {
+	overflow-x: auto;
+}
+
+.table table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table table td, .table table th {
+	padding: 15px 20px;
+}
+
+.table table td {
+	border-top: solid 1px #dedede;
+}
+
+.table table thead {
+	text-align: left;
+}
+
+.table table thead tr {
+	background-color: #dedede;
+}

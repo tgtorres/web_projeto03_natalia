@@ -1,0 +1,31 @@
+.menu {
+	width: 15rem;
+	min-height: 100%;
+	max-height: 100%;
+	background-color: #dedede;
+	padding: 60px 30px;
+}
+
+.menu nav {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	font-weight: 700;
+}
+
+.menu nav a, .menu nav a:visited {
+	margin: 8px 0;
+	font-size: 14px;
+	padding: 13px 20px;
+	border-radius: 10px;
+	transition: all 0.2s;
+}
+
+.menu nav a svg {
+	margin-right: 10px;
+}
+
+.menu nav a.active, .menu nav a:focus, .menu nav a:hover, .menu nav a:active {
+	background-color: #a6a6a6;
+	color: #fff;
+}
