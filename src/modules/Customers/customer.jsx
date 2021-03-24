@@ -3,30 +3,59 @@ import api from '../../services/api';
 
 export default class Customer extends Component {
 
+	state = {
+		name: '',
+		instagram: '',
+		phone: '',
+		id: null,
+	}
+
 	constructor(props) {
 	    super(props);
 	    this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	state = {
-		name: '',
-		instagram: '',
-		phone: '',
+	componentDidMount() {
+	    // Pega o id passado pela url
+	    let id = this.props.match.params.id;
+	    
+	    // Se houver id, busca o registro na api
+	    if (id) {
+
+	    	api({
+				url: 'customers/'+id,
+				method: 'get'
+			}).then(response => {
+
+				let {name, instagram, phone} = response.data;
+
+				this.setState({name, instagram, phone, id});
+				
+			}).catch(error=> {
+				// Em caso de falha retorna pra listagem
+				this.props.history.push("/clientes");
+			})
+	    }
 	}
 
 	handleSubmit(e) {
 
 		e.preventDefault();
 
-		let data = 
+		let {id, name, instagram, phone} = this.state; 
 
+		// Verifica se existe id, se sim realiza um PUT, se não realiza um POST
 		api({
-			url: 'customers',
-			method: 'post',
-			data: this.state
+			url: 'customers'+ (this.state.id ? '/'+this.state.id : ''),
+			method: this.state.id ? 'put' : 'post',
+			data: {name, instagram, phone}
 		}).then(response => {
-			 this.props.history.push("/clientes");
-		}).catch(error=> {})
+
+			this.props.history.push("/clientes");
+
+		}).catch(error=> {
+
+		});
 
 	}
 
@@ -38,7 +67,7 @@ export default class Customer extends Component {
 
 				<header>
 					
-					<h2>Adicionar Cliente</h2>
+					<h2> { this.state.id ? 'Editar' : 'Adicionar' } Cliente </h2>
 				
 				</header>
 
@@ -47,22 +76,22 @@ export default class Customer extends Component {
 					<form className="form column" onSubmit={this.handleSubmit}>
 
 						<div className="form-group">
-							<label>Nome</label>
+							<label> Nome </label>
 							<input name="name" value={ this.state.name } onChange={ e => { this.setState({name: e.target.value}) } } />
 						</div>
 
 						<div className="form-group">
-							<label>Telefone</label>
+							<label> Telefone </label>
 							<input name="phone" value={ this.state.phone } onChange={ e => { this.setState({phone: e.target.value}) } } />
 						</div>
 
 						<div className="form-group">
-							<label>Instagram</label>
+							<label> Instagram </label>
 							<input name="instagram" value={ this.state.instagram } onChange={ e => { this.setState({instagram: e.target.value}) } } />
 						</div>
 
 						<div className="text-align-right">
-							<button className="btn" type="submit">Salvar</button>
+							<button className="btn" type="submit"> Salvar </button>
 						</div>
 
 					</form>

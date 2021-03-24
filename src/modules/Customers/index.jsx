@@ -7,15 +7,38 @@ import api from '../../services/api';
 export default class Customers extends Component {
 
 	state = {
-  		customers: []
+  		customers: [],
+  		pages: 0,
+  		page: 1
 	};
 
+	constructor(props) {
+	    super(props);
+	    this.nextPage = this.nextPage.bind(this);
+	}
+
 	componentDidMount() {
+		this.getCustomers();
+	}
 
-		api.get('customers').then(response => {
-			this.setState({ customers: response.data.rows});
-		}).catch(error=> {})
+	getCustomers(page = 1) {
 
+		api.get(`customers?page=${page}`)
+		.then(response => {
+			this.setState({ customers: response.data.rows, pages: response.data.count});
+		}).catch(error=> {
+
+		});
+
+	}
+
+	nextPage() {
+		const { page, pages } = this.state;
+		if (page == pages) return
+
+		const pageNumber = page + 1;
+
+		this.getCustomers(pageNumber);
 	}
 
 	render() {
@@ -52,6 +75,11 @@ export default class Customers extends Component {
 						}	
 
 					</Table>
+
+					<div className="text-align-right">
+						<button className="btn" onClick={this.nextPage} > > </button>
+					</div>
+
 
 				</div>
 
