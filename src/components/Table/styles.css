@@ -22,3 +22,13 @@
 .table table thead tr {
 	background-color: #dedede;
 }
+
+.table tbody tr .actions, .table thead tr .actions {
+	max-width: 80px;
+	text-align: center;
+}
+
+.table tbody tr .actions .btn {
+	margin: 0 5px;
+	padding: 8px 10px;
+}

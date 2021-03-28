@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './styles.css';
 
 export default function Table({headers, children}) {
@@ -22,6 +22,10 @@ export default function Table({headers, children}) {
 							</th>	
 
 						)) }
+
+						<th className="actions">
+							Ações
+						</th>
 
 					</tr>
 

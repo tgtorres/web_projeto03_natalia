@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import { phoneFormat } from '../../Helpers';
 
 export default class Customer extends Component {
 
@@ -13,6 +14,7 @@ export default class Customer extends Component {
 	constructor(props) {
 	    super(props);
 	    this.handleSubmit = this.handleSubmit.bind(this);
+	    this.handlePhone = this.handlePhone.bind(this);
 	}
 
 	componentDidMount() {
@@ -42,7 +44,7 @@ export default class Customer extends Component {
 
 		e.preventDefault();
 
-		let {id, name, instagram, phone} = this.state; 
+		let { name, instagram, phone} = this.state; 
 
 		// Verifica se existe id, se sim realiza um PUT, se não realiza um POST
 		api({
@@ -54,9 +56,21 @@ export default class Customer extends Component {
 			this.props.history.push("/clientes");
 
 		}).catch(error=> {
+			let msg = '';
+
+			error.response.data.errors.forEach(e => {
+				msg += e + '\n'
+			})
+
+			alert(msg);
 
 		});
 
+	}
+
+	handlePhone(event) {
+  		event.target.value = phoneFormat(event.target.value);
+  		this.setState({phone: event.target.value});
 	}
 
 	render() {

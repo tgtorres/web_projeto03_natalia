@@ -31,9 +31,10 @@ a {
 	cursor: pointer;
 	background-color: #dedede;
 	color: inherit;
+	font-weight: inherit;
 	border: none;
 	border-radius: 10px;
-	padding: 13px 20px;
+	padding: 12px 20px;
 	transition: all 200ms;
 }
 
@@ -42,10 +43,40 @@ a {
 	color: #fff;
 }
 
+.btn.btn-red {
+	background-color: #ff2f2f;
+	color: #fff;
+}
+
+.btn.btn-red:hover, .btn.btn-red:focus, .btn.btn-red:active {
+	background-color: #ec2929;
+}
+
+.pagination-buttons {
+	text-align: right;
+}
+
+.pagination-buttons .btn {
+	margin: 0 5px;
+	padding: 10px 12px;
+}
 
 .form {
 	display: flex;
 	flex-direction: column;
+}
+
+.form .form-row {
+	display: flex;
+	flex-direction: row;
+	margin: 10px -10px;
+}
+
+.form .form-row .form-group {
+	flex-grow: 1;
+	flex-shrink: 0;
+	max-width: 100%;
+	margin: 0 10px;
 }
 
 .form .form-group {
