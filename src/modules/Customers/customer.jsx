@@ -14,7 +14,6 @@ export default class Customer extends Component {
 	constructor(props) {
 	    super(props);
 	    this.handleSubmit = this.handleSubmit.bind(this);
-	    this.handlePhone = this.handlePhone.bind(this);
 	}
 
 	componentDidMount() {
@@ -31,7 +30,7 @@ export default class Customer extends Component {
 
 				let {name, instagram, phone} = response.data;
 
-				this.setState({name, instagram, phone, id});
+				this.setState({name, instagram, phone: phoneFormat(phone), id});
 				
 			}).catch(error=> {
 				// Em caso de falha retorna pra listagem
@@ -50,7 +49,7 @@ export default class Customer extends Component {
 		api({
 			url: 'customers'+ (this.state.id ? '/'+this.state.id : ''),
 			method: this.state.id ? 'put' : 'post',
-			data: {name, instagram, phone}
+			data: {name, instagram, phone: phone.replace(/\D/g,"")}
 		}).then(response => {
 
 			this.props.history.push("/clientes");
@@ -66,11 +65,6 @@ export default class Customer extends Component {
 
 		});
 
-	}
-
-	handlePhone(event) {
-  		event.target.value = phoneFormat(event.target.value);
-  		this.setState({phone: event.target.value});
 	}
 
 	render() {
@@ -96,7 +90,7 @@ export default class Customer extends Component {
 
 						<div className="form-group">
 							<label> Telefone </label>
-							<input name="phone" value={ this.state.phone } onChange={ e => { this.setState({phone: e.target.value}) } } />
+							<input name="phone" value={ this.state.phone } onChange={ e => { this.setState({phone: phoneFormat(e.target.value)}) } } />
 						</div>
 
 						<div className="form-group">

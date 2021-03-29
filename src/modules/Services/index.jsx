@@ -51,7 +51,7 @@ export default class Services extends Component {
 
 				window.alert('Serviço excluido com sucesso!');
 				
-				const services = this.state.services.filter(c => c.id != id);
+				const services = this.state.services.filter(c => c.id !== id);
 				
 				this.setState({services});
 
@@ -74,7 +74,7 @@ export default class Services extends Component {
 	}
 
 	previousPage() {
-		const { page, limit } = this.state.pagination;
+		const { page } = this.state.pagination;
 
 		if ((page-1) <= 0) return
 

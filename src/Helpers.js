@@ -1,12 +1,22 @@
 export function phoneFormat(number) {
+	
+	let v = number.replace(/\D/g,"");       
 
-	let x;
+    v = v.length > 11 ? v.substring(0,11) : v;
+    
+    v = v.replace(/^(\d{2})(\d)/g,"($1) $2"); 
+    v = v.replace(/(\d{1,5})(\d{4})$/,"$1-$2");
 
-	if (number.length == 10 ) {
-		x = number.replace(/\D/g, '').match(/(\d{0,2})(\d{0,4})(\d{0,4})/)
-	} else if (number.length == 11 ) {
-		x = number.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-	}
-								
-	return '(' + x[1] + ') ' + x[2] + '-' + x[3];
+
+	return v;
+}
+
+export function dateTimeFormat(value) {
+
+	let [date, time] = value.split(' ');
+
+	let [d1, d2, d3] = date.split('-');
+
+	return `${d3}/${d2}/${d1} ${time}`;
+
 }

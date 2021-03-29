@@ -52,7 +52,7 @@ export default class Customers extends Component {
 
 				window.alert('Cliente excluido com sucesso!');
 				
-				const customers = this.state.customers.filter(c => c.id != id);
+				const customers = this.state.customers.filter(c => c.id !== id);
 				
 				this.setState({customers});
 
@@ -75,7 +75,7 @@ export default class Customers extends Component {
 	}
 
 	previousPage() {
-		const { page, total, limit } = this.state.pagination;
+		const { page } = this.state.pagination;
 
 		if ((page-1) <= 0) return
 

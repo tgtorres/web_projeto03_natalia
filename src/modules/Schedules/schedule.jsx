@@ -6,19 +6,31 @@ export default class Schedule extends Component {
 	state = {
 		customer_id: '',
 		service_id: '',
+		customer: {},
+		service: {},
 		date: '',
 		time: '',
 		id: null,
+
+		// Clientes e serviços para o Select
+		customers: [],
+		services: []
 	}
 
 	constructor(props) {
 	    super(props);
+	    this.getCustomers = this.getCustomers.bind(this);
+	    this.getServices = this.getServices.bind(this);
 	    this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	componentDidMount() {
 	    // Pega o id passado pela url
 	    let id = this.props.match.params.id;
+
+	    // Chama as buscas de clientes e serviços
+	    this.getCustomers();
+	    this.getServices();
 	    
 	    // Se houver id, busca o registro na api
 	    if (id) {
@@ -28,17 +40,48 @@ export default class Schedule extends Component {
 				method: 'get'
 			}).then(response => {
 
-				let {customer_id, service_id, date_time} = response.data;
+				let {customer_id, service_id, date_time, customer, service} = response.data;
 
 				let [date, time] = date_time.split(' ');
 
-				this.setState({customer_id, service_id, date, time, id});
+				this.setState({customer_id, service_id, customer, service, date, time, id});
 				
 			}).catch(error=> {
 				// Em caso de falha retorna pra listagem
 				this.props.history.push("/agendamentos");
 			})
 	    }
+	}
+
+	// Busca os clientes
+	getCustomers() {
+
+		api({
+			url: 'customers?limit=500',
+			method: 'get'
+		}).then((response)=> {
+
+			this.setState({customers: response.data.customers});
+
+		}).catch((error)=> {
+			console.log(error);
+		})
+
+	}
+
+	// Busca os serviços
+	getServices() {
+
+		api({
+			url: 'services?limit=500',
+			method: 'get'
+		}).then((response)=> {
+
+			this.setState({services: response.data.services});
+
+		}).catch((error)=> {
+			console.log(error);
+		})
 	}
 
 	handleSubmit(e) {
@@ -90,12 +133,28 @@ export default class Schedule extends Component {
 
 						<div className="form-group">
 							<label> Cliente </label>
-							<input name="customer_id" value={ this.state.customer_id } onChange={ e => { this.setState({customer_id: e.target.value}) } } />
+							<select name="customer_id" value={this.state.customer_id} onChange={ e => { this.setState({customer_id: e.target.value}) } } > 
+								{
+									this.state.customers.map(customer => (
+										<option value={customer.id} selected={customer.id === this.state.customer_id} >
+											{ customer.name }
+										</option>
+									))
+								}
+							</select>
 						</div>
 
 						<div className="form-group">
 							<label> Serviço </label>
-							<input name="service_id" value={ this.state.service_id } onChange={ e => { this.setState({service_id: e.target.value}) } } />
+							<select name="service_id" value={this.state.service_id} onChange={ e => { this.setState({service_id: e.target.value}) } } > 
+								{
+									this.state.services.map(service => (
+										<option value={service.id} selected={service.id === this.state.service_id}>
+											{ service.name }
+										</option>
+									))
+								}
+							</select>
 						</div>
 
 						<div className="form-row">
