@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import AsyncSelect from 'react-select/async'
 
 export default class Schedule extends Component {
 
 	state = {
 		customer_id: '',
 		service_id: '',
-		customer: {},
-		service: {},
 		date: '',
 		time: '',
 		id: null,
 
-		// Clientes e serviços para o Select
-		customers: [],
-		services: []
+		// valores para o select
+		selected_customer: null,
+		selected_service: null,
 	}
 
 	constructor(props) {
@@ -27,10 +26,6 @@ export default class Schedule extends Component {
 	componentDidMount() {
 	    // Pega o id passado pela url
 	    let id = this.props.match.params.id;
-
-	    // Chama as buscas de clientes e serviços
-	    this.getCustomers();
-	    this.getServices();
 	    
 	    // Se houver id, busca o registro na api
 	    if (id) {
@@ -42,9 +37,19 @@ export default class Schedule extends Component {
 
 				let {customer_id, service_id, date_time, customer, service} = response.data;
 
+				let selected_customer = {
+					id: customer.id,
+					label: customer.name
+				}
+
+				let selected_service = {
+					id: service.id,
+					label: service.name
+				}
+
 				let [date, time] = date_time.split(' ');
 
-				this.setState({customer_id, service_id, customer, service, date, time, id});
+				this.setState({customer_id, service_id, selected_customer, selected_service, date, time, id});
 				
 			}).catch(error=> {
 				// Em caso de falha retorna pra listagem
@@ -53,15 +58,22 @@ export default class Schedule extends Component {
 	    }
 	}
 
-	// Busca os clientes
-	getCustomers() {
+	// Toda vez que o usuário digitar no campo ele irá chamar a função e realizar um GET passando o termo digitado
+	getCustomers(input) {
 
-		api({
-			url: 'customers?limit=500',
-			method: 'get'
+		return api({
+			url: 'customers',
+			method: 'get',
+			params: {
+				'search': input
+			}
 		}).then((response)=> {
 
-			this.setState({customers: response.data.customers});
+			let customers = response.data.customers.map(customer => {
+				return {label: customer.name, value: customer.id}
+			});
+
+			return customers;
 
 		}).catch((error)=> {
 			console.log(error);
@@ -69,19 +81,27 @@ export default class Schedule extends Component {
 
 	}
 
-	// Busca os serviços
-	getServices() {
+	// Toda vez que o usuário digitar no campo ele irá chamar a função e realizar um GET passando o termo digitado
+	getServices(input) {
 
-		api({
-			url: 'services?limit=500',
-			method: 'get'
+		return api({
+			url: 'services',
+			method: 'get',
+			params: {
+				'search': input
+			}
 		}).then((response)=> {
 
-			this.setState({services: response.data.services});
+			let services = response.data.services.map(service => {
+				return {label: service.name, value: service.id}
+			});
+
+			return services;
 
 		}).catch((error)=> {
 			console.log(error);
 		})
+
 	}
 
 	handleSubmit(e) {
@@ -133,28 +153,28 @@ export default class Schedule extends Component {
 
 						<div className="form-group">
 							<label> Cliente </label>
-							<select name="customer_id" value={this.state.customer_id} onChange={ e => { this.setState({customer_id: e.target.value}) } } > 
-								{
-									this.state.customers.map(customer => (
-										<option value={customer.id} selected={customer.id === this.state.customer_id} >
-											{ customer.name }
-										</option>
-									))
-								}
-							</select>
+
+							<AsyncSelect
+								placeholder="Selecione um cliente"
+								classNamePrefix="react-select" //Prefixo de classes para editar no css
+								value={ this.state.selected_customer } // Valor do select
+								// Setando o valor do select e o id do cliente no estado quando uma opção é selecionada
+								onChange={selected => { this.setState({customer_id: selected.value, selected_customer: selected}) } } 
+					            loadOptions={this.getCustomers} //Chama a função de busca toda vez que o usuário digita
+					        />
+
 						</div>
 
 						<div className="form-group">
 							<label> Serviço </label>
-							<select name="service_id" value={this.state.service_id} onChange={ e => { this.setState({service_id: e.target.value}) } } > 
-								{
-									this.state.services.map(service => (
-										<option value={service.id} selected={service.id === this.state.service_id}>
-											{ service.name }
-										</option>
-									))
-								}
-							</select>
+
+							<AsyncSelect
+								placeholder="Selecione um serviço"
+								classNamePrefix="react-select"
+								value={ this.state.selected_service }
+								onChange={selected => { this.setState({service_id: selected.value, selected_service: selected}) } }
+					            loadOptions={this.getServices} />
+
 						</div>
 
 						<div className="form-row">
