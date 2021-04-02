@@ -39,13 +39,13 @@ export default class Schedule extends Component {
 
 				// Adapta os objetos para o padrão do AsyncSelect
 				let selected_customer = {
-					id: customer.id,
-					label: customer.name
+					label: customer.name,
+					value: customer.id
 				}
 
 				let selected_service = {
-					id: service.id,
-					label: service.name
+					label: service.name,
+					value: service.id
 				}
 
 				// Separa data e hora
