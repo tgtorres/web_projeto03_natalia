@@ -43,6 +43,13 @@ a {
 	color: #fff;
 }
 
+.btn:disabled, btn:disabled:hover, .btn:disabled:focus, .btn:disabled:active {
+	background-color: #dedede;
+	color: inherit;
+	opacity: 0.5;
+	cursor: default;	
+}
+
 .btn.btn-red {
 	background-color: #ff2f2f;
 	color: #fff;
@@ -75,7 +82,7 @@ a {
 .form .form-row .form-group {
 	flex-grow: 1;
 	flex-shrink: 0;
-	max-width: 100%;
+	max-width: 50%;
 	margin: 0 10px;
 }
 

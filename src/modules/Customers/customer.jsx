@@ -52,6 +52,10 @@ export default class Customer extends Component {
 			data: {name, instagram, phone: phone.replace(/\D/g,"")}
 		}).then(response => {
 
+			let feedback = this.state.id ? 'Cliente editado com sucesso!' : 'Cliente adicionado com sucesso!';
+
+			window.alert(feedback);
+			
 			this.props.history.push("/clientes");
 
 		}).catch(error=> {
@@ -61,7 +65,7 @@ export default class Customer extends Component {
 				msg += e + '\n'
 			})
 
-			alert(msg);
+			window.alert(msg);
 
 		});
 

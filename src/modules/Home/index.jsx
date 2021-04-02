@@ -7,7 +7,9 @@ export default function Profile() {
 		<div className="container">
 
 			<h2>
-				Home
+
+				Seja bem vindo(a)!
+
 			</h2>
 
 		</div>

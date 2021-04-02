@@ -37,6 +37,7 @@ export default class Schedule extends Component {
 
 				let {customer_id, service_id, date_time, customer, service} = response.data;
 
+				// Adapta os objetos para o padrão do AsyncSelect
 				let selected_customer = {
 					id: customer.id,
 					label: customer.name
@@ -47,6 +48,7 @@ export default class Schedule extends Component {
 					label: service.name
 				}
 
+				// Separa data e hora
 				let [date, time] = date_time.split(' ');
 
 				this.setState({customer_id, service_id, selected_customer, selected_service, date, time, id});
@@ -61,6 +63,7 @@ export default class Schedule extends Component {
 	// Toda vez que o usuário digitar no campo ele irá chamar a função e realizar um GET passando o termo digitado
 	getCustomers(input) {
 
+		// Será feito um get na api utilizando o parametro recebido como termo de busca
 		return api({
 			url: 'customers',
 			method: 'get',
@@ -84,6 +87,7 @@ export default class Schedule extends Component {
 	// Toda vez que o usuário digitar no campo ele irá chamar a função e realizar um GET passando o termo digitado
 	getServices(input) {
 
+		// Será feito um get na api utilizando o parametro recebido como termo de busca
 		return api({
 			url: 'services',
 			method: 'get',
@@ -119,6 +123,10 @@ export default class Schedule extends Component {
 			data: {customer_id, service_id, date_time}
 		}).then(response => {
 
+			let feedback = this.state.id ? 'Agendamento editado com sucesso!' : 'Agendamento adicionado com sucesso!';
+
+			window.alert(feedback);
+
 			this.props.history.push("/agendamentos");
 
 		}).catch(error=> {
@@ -129,7 +137,7 @@ export default class Schedule extends Component {
 				msg += e + '\n'
 			})
 
-			alert(msg);
+			window.alert(msg);
 
 		});
 

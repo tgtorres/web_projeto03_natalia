@@ -50,6 +50,10 @@ export default class Service extends Component {
 			data: {name, description}
 		}).then(response => {
 
+			let feedback = this.state.id ? 'Serviço editado com sucesso!' : 'Serviço adicionado com sucesso!';
+
+			window.alert(feedback);
+
 			this.props.history.push("/servicos");
 
 		}).catch(error=> {
@@ -60,7 +64,7 @@ export default class Service extends Component {
 				msg += e + '\n'
 			})
 
-			alert(msg);
+			window.alert(msg);
 
 		});
 

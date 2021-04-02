@@ -86,6 +86,8 @@ export default class Services extends Component {
 
 	render() {
 
+		const { page, total, limit } = this.state.pagination;
+
 		return (
 
 			<div className="container">
@@ -131,8 +133,8 @@ export default class Services extends Component {
 					</Table>
 
 					<div className="pagination-buttons">
-						<button className="btn" onClick={this.previousPage} > <FiChevronLeft/> </button>
-						<button className="btn" onClick={this.nextPage} > <FiChevronRight/> </button>
+						<button className="btn" disabled={page-1 <= 0 ? 'disabled' : '' } onClick={this.previousPage} > <FiChevronLeft/> </button>
+						<button className="btn" disabled={page*limit >= total ? 'disabled' : '' } onClick={this.nextPage} > <FiChevronRight/> </button>
 					</div>
 
 				</div>
