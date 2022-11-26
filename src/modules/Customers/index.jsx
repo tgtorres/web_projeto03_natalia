@@ -136,8 +136,8 @@ export default class Customers extends Component {
 					</Table>
 
 					<div className="pagination-buttons">
-						<button className="btn" disabled={page-1 <= 0 ? 'disabled' : '' } onClick={this.previousPage} > <FiChevronLeft/> </button>
-						<button className="btn" disabled={page*limit >= total ? 'disabled' : '' } onClick={this.nextPage} > <FiChevronRight/> </button>
+						<button className="btn" disabled={page-1 <= 0 ? 'disabled' : '' } onClick={previousPage} > <FiChevronLeft/> </button>
+						<button className="btn" disabled={page*limit >= total ? 'disabled' : '' } onClick={nextPage} > <FiChevronRight/> </button>
 					</div>
 
 				</div>
